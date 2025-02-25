@@ -11,26 +11,48 @@
 
 
 
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+// import mongoose from "mongoose";
+// import dotenv from "dotenv";
 
-dotenv.config(); // Ensure env variables are loaded
+// dotenv.config(); // Ensure env variables are loaded
+
+// const connectDB = async () => {
+//   try {
+//     const uri = process.env.MONGO_URI; // Fetch MongoDB URI from env
+//     if (!uri) {
+//       throw new Error("MongoDB URI is not defined. Set MONGO_URI in .env");
+//     }
+//     await mongoose.connect(uri, {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//     console.log("MongoDB Connected...");
+//   } catch (error) {
+//     console.error("MongoDB connection error:", error.message);
+//     process.exit(1); // Exit process if connection fails
+//   }
+// };
+
+// export default connectDB;
+
+
+
+
+
+import mongoose from "mongoose";
 
 const connectDB = async () => {
-  try {
-    const uri = process.env.MONGO_URI; // Fetch MongoDB URI from env
-    if (!uri) {
-      throw new Error("MongoDB URI is not defined. Set MONGO_URI in .env");
+    try {
+        const conn = await mongoose.connect(process.env.MONGO_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error) {
+        console.error(`MongoDB connection error: ${error.message}`);
+        process.exit(1);
     }
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log("MongoDB Connected...");
-  } catch (error) {
-    console.error("MongoDB connection error:", error.message);
-    process.exit(1); // Exit process if connection fails
-  }
 };
 
-export default connectDB;
+export { connectDB }; // ✅ Ensure named export
+
