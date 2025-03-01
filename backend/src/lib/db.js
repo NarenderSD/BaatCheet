@@ -31,5 +31,5 @@ const connectDB = async () => {
     }
 };
 
-// ✅ Named export के बजाय default export करो
+
 export default connectDB;
